@@ -50,11 +50,11 @@ include_recipe "python::virtualenv"
 
 # not a good practice but sufficient for travis-ci.org needs, so lets keep it
 # hardcoded. MK.
-installation_root = "/home/vagrant/virtualenv"
+installation_root = "/home/ubuntu/virtualenv"
 
 directory(installation_root) do
-  owner "vagrant"
-  group "vagrant"
+  owner "ubuntu"
+  group "ubuntu"
   mode  "0755"
 
   action :create
@@ -62,9 +62,9 @@ end
 
 
 node.python.multi.pythons.each do |py|
-  python_virtualenv "/home/vagrant" do
-    owner       "vagrant"
-    group       "vagrant"
+  python_virtualenv "/home/ubuntu" do
+    owner       "ubuntu"
+    group       "ubuntu"
     interpreter py
     path        "#{installation_root}/#{py}"
 

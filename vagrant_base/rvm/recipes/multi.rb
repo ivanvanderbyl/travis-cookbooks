@@ -27,10 +27,10 @@ gems    = node[:rvm].fetch(:gems, []) | ['bundler', 'chef']
 default = node[:rvm][:default] || node[:rvm][:rubies].first
 aliases = node[:rvm][:aliases] || []
 
-home = '/home/vagrant'
+home = '/home/ubuntu'
 rvm  = "source #{home}/.rvm/scripts/rvm && rvm"
 env  = { 'HOME' => home, 'rvm_user_install_flag' => '1' }
-user = "vagrant"
+user = "ubuntu"
 
 setup = lambda do |bash|
   bash.user user

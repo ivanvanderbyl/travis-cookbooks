@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 
 include_recipe "travis_build_environment::root"
-include_recipe "travis_build_environment::vagrant"
+include_recipe "travis_build_environment::ubuntu"
 
 cookbook_file "/etc/default/locale" do
   owner "root"

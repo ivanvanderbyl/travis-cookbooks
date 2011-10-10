@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: travis_build_environment
-# Recipe:: vagrant
+# Recipe:: ubuntu
 # Copyright 2011, Travis CI development team
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,59 +23,59 @@
 
 
 cookbook_file "/etc/profile.d/travis_environment.sh" do
-  owner "vagrant"
-  group "vagrant"
+  owner "ubuntu"
+  group "ubuntu"
   mode 0755
 
-  source "vagrant/travis_environment.sh"
+  source "ubuntu/travis_environment.sh"
 end
 
 
-cookbook_file "/home/vagrant/.gemrc" do
-  owner "vagrant"
-  group "vagrant"
+cookbook_file "/home/ubuntu/.gemrc" do
+  owner "ubuntu"
+  group "ubuntu"
   mode 0755
 
-  source "vagrant/dot_gemrc.yml"
+  source "ubuntu/dot_gemrc.yml"
 end
 
 
-cookbook_file "/home/vagrant/.bashrc" do
-  owner "vagrant"
-  group "vagrant"
+cookbook_file "/home/ubuntu/.bashrc" do
+  owner "ubuntu"
+  group "ubuntu"
   mode 0755
 
-  source "vagrant/dot_bashrc.sh"
+  source "ubuntu/dot_bashrc.sh"
 end
 
 
-directory "/home/vagrant/.ssh" do
-  owner  "vagrant"
-  group  "vagrant"
+directory "/home/ubuntu/.ssh" do
+  owner  "ubuntu"
+  group  "ubuntu"
   mode   "0755"
 
   action :create
 end
 
 
-cookbook_file "/home/vagrant/.ssh/known_hosts" do
-  owner "vagrant"
-  group "vagrant"
+cookbook_file "/home/ubuntu/.ssh/known_hosts" do
+  owner "ubuntu"
+  group "ubuntu"
   mode  0600
-  
-  source "vagrant/known_hosts"
+
+  source "ubuntu/known_hosts"
 end
 
 
-directory "/home/vagrant/builds" do
-  owner "vagrant"
-  group "vagrant"
+directory "/home/ubuntu/builds" do
+  owner "ubuntu"
+  group "ubuntu"
   mode "0755"
   action :create
 end
 
 
-mount "/home/vagrant/builds" do
+mount "/home/ubuntu/builds" do
   fstype   "tmpfs"
   device   "/dev/null" # http://tickets.opscode.com/browse/CHEF-1657, doesn't seem to be included in 0.10.0
   options  "defaults,size=#{node.travis_build_environment.builds_volume_size},noatime"

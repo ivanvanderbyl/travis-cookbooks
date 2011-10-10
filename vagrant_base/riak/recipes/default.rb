@@ -31,8 +31,8 @@ when "debian", "ubuntu"
     path = File.join(tmp, deb)
 
     remote_file(path) do
-      owner  "vagrant"
-      group  "vagrant"
+      owner  "ubuntu"
+      group  "ubuntu"
       source "http://downloads.basho.com.s3-website-us-east-1.amazonaws.com/riak/1.0/1.0.0/riak_1.0.0-1_i386.deb"
     end
 

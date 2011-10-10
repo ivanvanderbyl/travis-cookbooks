@@ -13,13 +13,13 @@ if ruby_version.size > 0
   include_recipe "rvm"
 
   bash "installing #{ruby_version}" do
-    user "vagrant"
+    user "ubuntu"
     code "rvm install #{ruby_version}"
     not_if "rvm list | grep #{ruby_version}"
   end
 
   bash "make #{ruby_version} the default ruby" do
-    user "vagrant"
+    user "ubuntu"
     code "rvm --default #{ruby_version}"
     not_if "rvm list | grep '=> #{ruby_version}'"
     only_if { node[:rvm][:ruby][:default] }

@@ -24,18 +24,18 @@
 require "tmpdir"
 
 permissions_setup = Proc.new do |resource|
-  resource.owner "vagrant"
-  resource.group "vagrant"
+  resource.owner "ubuntu"
+  resource.group "ubuntu"
   resource.mode 0755
 end
 
-directory "/home/vagrant/.nvm" do
+directory "/home/ubuntu/.nvm" do
   permissions_setup.call(self)
 end
 
 # Note that nvm will automatically install npm, the node package manager,
 # for each installed version of node.
-cookbook_file "/home/vagrant/.nvm/nvm.sh" do
+cookbook_file "/home/ubuntu/.nvm/nvm.sh" do
   permissions_setup.call(self)
 end
 
@@ -44,34 +44,34 @@ cookbook_file "/etc/profile.d/nvm.sh" do
   source "profile_entry.sh"
 end
 
-nvm = "source /home/vagrant/.nvm/nvm.sh; nvm"
+nvm = "source /home/ubuntu/.nvm/nvm.sh; nvm"
 
 bash "syncing nvm with http://nodejs.org/" do
-  user "vagrant"
-  cwd "/home/vagrant"
+  user "ubuntu"
+  cwd "/home/ubuntu"
   code "#{nvm} sync"
 end
 
 node[:nodejs][:versions].each do |node|
   bash "installing node version #{node}" do
-    creates "/home/vagrant/.nvm/#{node}"
-    user "vagrant"
-    group "vagrant"
-    cwd "/home/vagrant"
-    environment({'HOME' => "/home/vagrant"})
+    creates "/home/ubuntu/.nvm/#{node}"
+    user "ubuntu"
+    group "ubuntu"
+    cwd "/home/ubuntu"
+    environment({'HOME' => "/home/ubuntu"})
     code  "#{nvm} install v#{node}"
   end
 end
 
 bash "make the default node" do
-  user "vagrant"
+  user "ubuntu"
   code "#{nvm} alias default v#{node[:default]}"
 end
 
 node[:nodejs][:aliases].each do |existing_name, new_name|
   bash "alias node #{existing_name} => #{new_name}" do
-    user "vagrant"
-    cwd "/home/vagrant"
+    user "ubuntu"
+    cwd "/home/ubuntu"
     code "#{nvm} alias #{new_name} v#{existing_name}"
   end
 end

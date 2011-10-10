@@ -20,26 +20,26 @@ when "debian","ubuntu"
 end
 
 bash "install RVM" do
-  user        "vagrant"
-  cwd         "/home/vagrant"
-  environment Hash['HOME' => "/home/vagrant", 'rvm_user_install_flag' => '1']
+  user        "ubuntu"
+  cwd         "/home/ubuntu"
+  environment Hash['HOME' => "/home/ubuntu", 'rvm_user_install_flag' => '1']
   code        <<-SH
   curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer -o /tmp/rvm-installer
   chmod +x /tmp/rvm-installer
   /tmp/rvm-installer --version #{node.rvm.version}
   SH
-  not_if      "test -d /home/vagrant/.rvm"
+  not_if      "test -d /home/ubuntu/.rvm"
 end
 
 cookbook_file "/etc/profile.d/rvm.sh" do
-  owner "vagrant"
-  group "vagrant"
+  owner "ubuntu"
+  group "ubuntu"
   mode 0755
 end
 
-cookbook_file "/home/vagrant/.rvmrc" do
-  owner "vagrant"
-  group "vagrant"
+cookbook_file "/home/ubuntu/.rvmrc" do
+  owner "ubuntu"
+  group "ubuntu"
   mode  0755
 
   source "dot_rvmrc.sh"

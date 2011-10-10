@@ -41,8 +41,8 @@ when "debian", "ubuntu"
     path = File.join(tmp, deb)
 
     cookbook_file(path) do
-      owner "vagrant"
-      group "vagrant"
+      owner "ubuntu"
+      group "ubuntu"
     end
 
     package(deb) do

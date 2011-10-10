@@ -18,13 +18,13 @@ when "debian","ubuntu"
 end
 
 bash "installing system-wide RVM stable" do
-  user "vagrant"
+  user "ubuntu"
   code "bash < <( curl -L -B http://rvm.beginrescueend.com/install/rvm )"
   not_if "which rvm"
 end
 
 cookbook_file "/etc/profile.d/rvm.sh" do
-  owner "vagrant"
-  group "vagrant"
+  owner "ubuntu"
+  group "ubuntu"
   mode 0755
 end
