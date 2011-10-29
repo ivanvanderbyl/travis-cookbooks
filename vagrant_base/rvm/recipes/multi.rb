@@ -46,17 +46,29 @@ node[:rvm][:rubies].each do |ruby|
   end
 
   gems.each do |gem|
-    bash "installing gem #{gem} for #{ruby}" do
-      setup.call(self)
-      code   "#{rvm} use #{ruby}; gem install #{gem} --no-ri --no-rdoc"
-      not_if "bash -c '#{rvm} use #{ruby}; find $GEM_HOME/gems -name \"#{gem}-[0-9]*.[0-9]*.[0-9]*\" | grep #{gem}'", :environment => env
+    if gem.split(',').size > 1
+      gem, *versions = gem.split(',').map(&:strip)
+
+      versions.each do |version|
+        bash "installing gem #{gem} V: #{version} for #{ruby}" do
+          setup.call(self)
+          code   "#{rvm} use #{ruby}; gem install #{gem} --version=#{version} --no-ri --no-rdoc"
+          not_if "bash -c '#{rvm} use #{ruby}; find $GEM_HOME/gems -name \"#{gem}-#{version}\" | grep #{gem}'", :environment => env
+        end
+      end
+    else
+      bash "installing gem #{gem} for #{ruby}" do
+        setup.call(self)
+        code   "#{rvm} use #{ruby}; gem install #{gem} --no-ri --no-rdoc"
+        not_if "bash -c '#{rvm} use #{ruby}; find $GEM_HOME/gems -name \"#{gem}-[0-9]*.[0-9]*.[0-9]*\" | grep #{gem}'", :environment => env
+      end
     end
   end
 end
 
-bash "make 1.8.7 the default ruby" do
+bash "make 1.9.2 the default ruby" do
   setup.call(self)
-  code "#{rvm} --default 1.8.7"
+  code "#{rvm} --default 1.9.2"
 end
 
 bash "install chef for the default Ruby" do
