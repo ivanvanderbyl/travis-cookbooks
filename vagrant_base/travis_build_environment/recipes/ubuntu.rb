@@ -67,7 +67,7 @@ cookbook_file "/home/ubuntu/.ssh/known_hosts" do
 end
 
 
-directory "/home/ubuntu/builds" do
+directory "/home/ubuntu/workspace" do
   owner "ubuntu"
   group "ubuntu"
   mode "0755"
@@ -75,7 +75,7 @@ directory "/home/ubuntu/builds" do
 end
 
 
-mount "/home/ubuntu/builds" do
+mount "/home/ubuntu/workspace" do
   fstype   "tmpfs"
   device   "/dev/null" # http://tickets.opscode.com/browse/CHEF-1657, doesn't seem to be included in 0.10.0
   options  "defaults,size=#{node.travis_build_environment.builds_volume_size},noatime"
